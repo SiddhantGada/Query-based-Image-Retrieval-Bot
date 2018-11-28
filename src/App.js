@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 import './hello.js';
+import {uploadFile} from './hello.js';
 
 class App extends Component {
+  fileChangedHandler = event => {
+      this.setState({
+        selectedFile: event.target.files[0]
+      });
+  }
+
+  uploadHandler = () => {
+      console.log(this.state.selectedFile, this.state.selectedFile.name);
+      uploadFile(this.state.selectedFile);
+  }
   render() {
     return (
       <body>
