@@ -4,7 +4,7 @@ var AWS = require('aws-sdk');
 
 var messages = [],
 lastUserMessage = "",
-botMessage = "Kucch toh bolo",
+botMessage = "Default Message",
 imageList = null,
 botName = 'Chatbot';
 var config = {
@@ -49,21 +49,47 @@ function chatbotResponse() {
 
 export function uploadFile(file) {
   console.log("Inside upload");
-  var additionalParams = {
-    headers: {
-      'Content-Type': 'image/jpeg; charset=utf-8',
-    },
-    queryParams: {}
+  if (file) {
+                AWS.config.update({
+                    "accessKeyId": "ACCESS_KEY_ID",
+                    "secretAccessKey": "SECRET_ACCESS_KEY",
+                    "region": "us-west-2"
+                });
+                var s3 = new AWS.S3();
+                var params = {
+                    Bucket: 'hw3photos',
+                    Key: file.name,
+                    ContentType: file.type,
+                    Body: file,
+                    ACL: 'public-read'
+                };
+                s3.putObject(params, function (err, res) {
+                    if (err) {
+                        console.log("Error uploading data: ", err);
+                    } else {
+                        console.log("Successfully uploaded data");
+                    }
+                });
+            } else {
+                alert('Nothing to upload.');
+            }
   };
-  var body = {
-    file : file
-  };
-  apigClient.invokeApi(params, '/upload/' + file.name, 'PUT', additionalParams, body).then(function(result) {
-    console.log("Sucessfully put object in S3 bucket")
-  }).catch(function(result) {
-    console.error("S3 put object failure")
-  });
-}
+//   console.log("Inside upload");
+//   var additionalParams = {
+//     headers: {
+//       'Content-Type': 'image/jpeg; charset=utf-8',
+//     },
+//     queryParams: {}
+//   };
+//   var body = {
+//     file : file
+//   };
+//   apigClient.invokeApi(params, '/upload/' + file.name, 'PUT', additionalParams, body).then(function(result) {
+//     console.log("Sucessfully put object in S3 bucket")
+//   }).catch(function(result) {
+//     console.error("S3 put object failure")
+//   });
+// }
 
 //runs the keypress() function when a key is pressed
 document.onkeypress = keyPress;
