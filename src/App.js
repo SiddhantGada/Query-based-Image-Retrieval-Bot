@@ -33,6 +33,8 @@ class App extends Component {
         <button onClick={this.uploadHandler} class='upload_1'>Upload!</button>
     </div>
   </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div id="myImg"></div>
 </div>
 </body>
     );

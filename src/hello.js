@@ -34,6 +34,18 @@ function chatbotResponse() {
         console.log("Sucessfully got chatbot response");
         botMessage = String(JSON.parse(result.data.body).answer);
         imageList = JSON.parse(result.data.body).imageList;
+        console.log(result)
+        console.log(imageList)
+         var myNode = document.getElementById("myImg");
+        while (myNode.firstChild) {
+            myNode.removeChild(myNode.firstChild);
+        }
+        for (var i = imageList.length - 1; i >= 0; i--) {
+          var elem = document.createElement("img");
+          elem.src = 'https://s3-us-west-2.amazonaws.com/hw3photos/'+imageList[i];
+          document.getElementById("myImg").appendChild(elem);
+           //document.getElementById('myImg').append("<img src=\"https://s3-us-west-2.amazonaws.com/hw3photos/test2.jpg\"/>");
+        }
         // TODO: https://s3-us-west-2.amazonaws.com/hw3photos/test4.jpg
         console.log(botMessage, imageList);
         messages.push("<b>" + botName + ":</b> " + botMessage);
@@ -42,6 +54,7 @@ function chatbotResponse() {
             document.getElementById("chatlog" + i).innerHTML = messages[messages.length - i];
         }
       }).catch(function(result) {
+        console.error(result)
         console.error("Chatbot response failure")
       });
     }
