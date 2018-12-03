@@ -8,7 +8,7 @@ botMessage = "Default Message",
 imageList = null,
 botName = 'Chatbot';
 var config = {
-          apiKey : 'Aw6Pqn4Ef51vqKQg1nxgn6kdKU5ijBNuBxqPLL91',
+          apiKey : 'apiKey',
           invokeUrl : 'https://pqj9shseg5.execute-api.us-west-2.amazonaws.com/test',
           region : REGION
 };
@@ -24,13 +24,13 @@ function chatbotResponse() {
       messages.push(lastUserMessage);
       document.getElementById("chatbox").value = "";
       var body = {
-        "question" : lastUserMessage,
+        question : lastUserMessage,
       };
       var additionalParams = {
         headers : {},
         queryParams: {}
       };
-      apigClient.invokeApi(params, '/search', 'GET', additionalParams, body).then(function(result) {
+      apigClient.invokeApi(params, '/search', 'POST', additionalParams, body).then(function(result) {
         console.log("Sucessfully got chatbot response");
         botMessage = String(JSON.parse(result.data.body).answer);
         imageList = JSON.parse(result.data.body).imageList;
@@ -64,8 +64,8 @@ export function uploadFile(file) {
   console.log("Inside upload");
   if (file) {
                 AWS.config.update({
-                    "accessKeyId": "ACCESS_KEY_ID",
-                    "secretAccessKey": "SECRET_ACCESS_KEY",
+                    "accessKeyId": "accessKeyId",
+                    "secretAccessKey": "secretAccessKey",
                     "region": "us-west-2"
                 });
                 var s3 = new AWS.S3();
@@ -81,6 +81,7 @@ export function uploadFile(file) {
                         console.log("Error uploading data: ", err);
                     } else {
                         console.log("Successfully uploaded data");
+                        window.alert("Successfully uploaded image");
                     }
                 });
             } else {
