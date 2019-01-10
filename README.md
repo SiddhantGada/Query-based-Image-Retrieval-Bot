@@ -8,7 +8,7 @@ For a given photo and a given search query, a correct search is able to return e
 
 The architecture followed while making the application is shown below:
 
-![Architecture Diagram] (architecture_diag.png)
+<img src="architecture_diag.png"/>
 
 
 ## Installation
