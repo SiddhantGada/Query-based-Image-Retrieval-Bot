@@ -1,6 +1,5 @@
 const REGION = "us-west-2";
 var AWS = require('aws-sdk');
-//fs = require('fs');
 
 var messages = [],
 lastUserMessage = "",
@@ -17,7 +16,7 @@ var apigClientFactory = require('aws-api-gateway-client').default;
 var apigClient = apigClientFactory.newClient(config);
 var params = {};
 
-
+// function to receive the response from the chatbot
 function chatbotResponse() {
    if (document.getElementById("chatbox").value !== "") {
       lastUserMessage = document.getElementById("chatbox").value;
@@ -44,9 +43,8 @@ function chatbotResponse() {
           var elem = document.createElement("img");
           elem.src = 'https://s3-us-west-2.amazonaws.com/hw3photos/'+imageList[i];
           document.getElementById("myImg").appendChild(elem);
-           //document.getElementById('myImg').append("<img src=\"https://s3-us-west-2.amazonaws.com/hw3photos/test2.jpg\"/>");
-        }
-        // TODO: https://s3-us-west-2.amazonaws.com/hw3photos/test4.jpg
+             }
+
         console.log(botMessage, imageList);
         messages.push("<b>" + botName + ":</b> " + botMessage);
         for (var i = 1; i < 8; i++) {
@@ -59,7 +57,7 @@ function chatbotResponse() {
       });
     }
 }
-
+// function to upload the image file to S3 bucket
 export function uploadFile(file) {
   console.log("Inside upload");
   if (file) {
@@ -88,22 +86,6 @@ export function uploadFile(file) {
                 alert('Nothing to upload.');
             }
   };
-//   console.log("Inside upload");
-//   var additionalParams = {
-//     headers: {
-//       'Content-Type': 'image/jpeg; charset=utf-8',
-//     },
-//     queryParams: {}
-//   };
-//   var body = {
-//     file : file
-//   };
-//   apigClient.invokeApi(params, '/upload/' + file.name, 'PUT', additionalParams, body).then(function(result) {
-//     console.log("Sucessfully put object in S3 bucket")
-//   }).catch(function(result) {
-//     console.error("S3 put object failure")
-//   });
-// }
 
 //runs the keypress() function when a key is pressed
 document.onkeypress = keyPress;
